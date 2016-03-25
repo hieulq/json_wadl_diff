@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- (C) 2015-2016 OpenStack Foundation, All Rights Reserved -->
+<!DOCTYPE application [
+    <!ENTITY % common  SYSTEM "../common.ent">
+    %common;
+    <!ENTITY % common_project  SYSTEM "../../../../common_project.ent">
+    %common_project;
+]>
+<application xmlns="http://wadl.dev.java.net/2009/02"
+    xmlns:xsdxt="http://docs.rackspacecloud.com/xsd-ext/v1.0"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:wadl="http://wadl.dev.java.net/2009/02"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:csapi="http://docs.openstack.org/identity/api/v3">
+    <resources base="https://servers.api.openstack.com"
+        xml:id="os-services-v2.1">
+        <resource id="version" type="#VersionDetails" path="//v2.1">
+            <resource id="tenant_id" path="{tenant_id}">
+                &tenant_idTemplateParameter;
+                <resource id="os-services" path="os-services">
+                    <method href="#listServices"/>
+                    <resource path="enable" id="enable">
+                        <method href="#enableScheduling"/>
+                    </resource>
+                    <resource path="disable" id="disable">
+                        <method href="#disableScheduling"/>
+                    </resource>
+                    <resource path="disable-log-reason" id="disable-log-reason">
+                        <method href="#disableLogReason"/>
+                    </resource>
+                    <method href="#deleteService"/>
+                </resource>
+            </resource>
+        </resource>
+    </resources>
+    <method name="GET" id="listServices">
+        <wadl:doc xml:lang="EN" xmlns="http://docbook.org/ns/docbook"
+            title="List services">
+            <para role="shortdesc">
+                Lists all services for a tenant. Includes reasons, if
+                available, for why any services were disabled.
+            </para>
+        </wadl:doc>
+        <response status="200">
+            <representation mediaType="application/json">
+                <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                    xml:lang="EN">
+                    <xsdxt:code
+                        href="../samples/os-services/services-list-get-response.json"
+                    />
+                </wadl:doc>
+                &servicesResponseParameter;
+                &serviceIdResponseParameter;
+                &binaryRequestParameter;
+                &disabled_reasonRequestParameter;
+                &hostRequestParameter;
+                &serviceStateResponseParameter;
+                &forced_downResponseParameter;
+                &serviceStatusResponseParameter;
+                &service-updated_at-ResponseParameter;
+                &zoneResponseParameter;
+            </representation>
+        </response>
+    </method>
+    <method name="PUT" id="enableScheduling">
+        <wadl:doc xml:lang="EN" xmlns="http://docbook.org/ns/docbook"
+            title="Enable scheduling for a service">
+            <para role="shortdesc">
+                Enables scheduling for a service.
+            </para>
+            <para>
+                Specify the service by its host name and binary name.
+            </para>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json">
+                <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                    xml:lang="EN">
+                    <xsdxt:code
+                        href="../samples/os-services/service-enable-put-request.json"
+                    />
+                </wadl:doc>
+                &hostRequestParameter;
+                &binaryRequestParameter;
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                    xml:lang="EN">
+                    <xsdxt:code
+                        href="../samples/os-services/service-enable-update-response.json"
+                    />
+                </wadl:doc>
+                &serviceResponseParameter;
+                &binaryRequestParameter;
+                &hostRequestParameter;
+                &serviceStatusResponseParameter;
+            </representation>
+        </response>
+    </method>
+    <method name="PUT" id="disableScheduling">
+        <wadl:doc xml:lang="EN" xmlns="http://docbook.org/ns/docbook"
+            title="Disable scheduling for a service">
+            <para role="shortdesc">
+                Disables scheduling for a service.
+            </para>
+            <para>
+                Specify the service by its host name and binary name.
+            </para>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json">
+                <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                    xml:lang="EN">
+                    <xsdxt:code
+                        href="../samples/os-services/service-disable-put-request.json"
+                    />
+                </wadl:doc>
+                &hostRequestParameter;
+                &binaryRequestParameter;
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                    xml:lang="EN">
+                    <xsdxt:code
+                        href="../samples/os-services/service-disable-update-response.json"
+                    />
+                </wadl:doc>
+                &serviceResponseParameter;
+                &binaryRequestParameter;
+                &hostRequestParameter;
+                &serviceStatusResponseParameter;
+            </representation>
+        </response>
+    </method>
+    <method name="PUT" id="disableLogReason">
+        <wadl:doc xml:lang="EN" xmlns="http://docbook.org/ns/docbook"
+            title="Log disabled service information">
+            <para role="shortdesc">
+                Logs information to the service table about why a
+                service was disabled.
+            </para>
+            <para>
+                Specify the service by its host name and binary name.
+            </para>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json">
+                <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                    xml:lang="EN">
+                    <xsdxt:code
+                        href="../samples/os-services/service-disable-log-put-request.json"
+                    />
+                </wadl:doc>
+                &hostRequestParameter;
+                &binaryRequestParameter;
+                &disabled_reasonRequestParameter;
+            </representation>
+        </request>
+        <response status="200">
+            <representation mediaType="application/json">
+                <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                    xml:lang="EN">
+                    <xsdxt:code
+                        href="../samples/os-services/service-disable-log-update-response.json"
+                    />
+                </wadl:doc>
+                &serviceResponseParameter;
+                &binaryRequestParameter;
+                &disabled_reasonRequestParameter;
+                &hostRequestParameter;
+                &serviceStatusResponseParameter;
+            </representation>
+        </response>
+    </method>
+    <method name="DELETE" id="deleteService">
+        <wadl:doc xml:lang="EN" xmlns="http://docbook.org/ns/docbook"
+            title="Delete service">
+            <para role="shortdesc">
+                Deletes a service.
+            </para>
+            <para>
+                Specify the service by its host name and binary name.
+            </para>
+        </wadl:doc>
+        <request>
+            <representation mediaType="application/json">
+                <wadl:doc xmlns="http://docbook.org/ns/docbook"
+                    xml:lang="EN">
+                    <xsdxt:code
+                        href="../samples/os-services/service-enable-put-request.json"
+                    />
+                </wadl:doc>
+                &hostRequestParameter;
+                &binaryRequestParameter;
+            </representation>
+        </request>
+        <response status="204"/>
+        <response status="404"/>
+    </method>
+</application>

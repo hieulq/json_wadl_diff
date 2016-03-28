@@ -3,13 +3,18 @@ from xml.dom import minidom
 doc = minidom.parse("wadls/object-api/src/os-object-api-1.0.wadl")
 
 # doc.getElementsByTagName returns NodeList
-name = doc.getElementsByTagName("name")[0]
-print(name.firstChild.data)
+methods = doc.getElementsByTagName("method")
 
-staffs = doc.getElementsByTagName("staff")
-for staff in staffs:
-    sid = staff.getAttribute("id")
-    nickname = staff.getElementsByTagName("nickname")[0]
-    salary = staff.getElementsByTagName("salary")[0]
-    print("id:%s, nickname:%s, salary:%s" %
-        (sid, nickname.firstChild.data, salary.firstChild.data))
+for method in methods:
+    mid = method.getAttribute("id")
+    if not mid:
+        continue
+    name = method.getAttribute("name")
+    request = method.getElementsByTagName("request")
+    response = method.getElementsByTagName("response")
+
+    if len(request) == 0 or len(response) == 0:
+        continue
+
+    print("id: %s, name: %s, request: %s, response: %s" %
+          (mid, name, request[0].firstChild.data, response[0].firstChild.data))

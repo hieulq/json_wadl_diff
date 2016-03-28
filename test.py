@@ -1,15 +1,8 @@
-from xml.dom import minidom
+from lxml import etree
 
-doc = minidom.parse("test.xml")
+doc = etree.parse("test.xml")
+print etree.tostring(doc)
 
-# doc.getElementsByTagName returns NodeList
-name = doc.getElementsByTagName("name")[0]
-print(name.firstChild.data)
+a = doc.findall("staff")
 
-staffs = doc.getElementsByTagName("staff")
-for staff in staffs:
-    sid = staff.getAttribute("id")
-    nickname = staff.getElementsByTagName("nickname")[0]
-    salary = staff.getElementsByTagName("salary")[0]
-    print("id:%s, nickname:%s, salary:%s" %
-        (sid, nickname.firstChild.data, salary.firstChild.data))
+print "fin"

@@ -16,8 +16,10 @@ for method in methods:
     request = method.getElementsByTagName("request")
     response = method.getElementsByTagName("response")
 
-    if len(request) == 0 or len(response) == 0:
-        continue
+    # if len(request) == 0 or len(response) == 0:
+    #     continue
 
-    print("id: %s, method: %s, request: %s, response: %s" %
-          (mid, name, request[0].firstChild.data, response[0].firstChild.data))
+    print ("id: %s, method: %s" % (mid, name))
+
+    # print("id: %s, method: %s, request: %s, response: %s" %
+    #       (mid, name, request[0].firstChild.data, response[0].firstChild.data))
